@@ -3,37 +3,26 @@ package counter
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"sync"
 	"sync/atomic"
 )
 
 // Counter interface represent the objective string counter on the single page
 type Counter interface {
-	Count(url string, wg *sync.WaitGroup, objectiveString string, value *uint32)
+	Count(url string, objectiveString string, totalValue *int64, outputChannel chan string)
 }
 
 type counter struct {
 	httpClient   *http.Client
-	quotaChannel chan struct{}
 	errorMessage string
 	logger       *log.Logger
-	output       io.Writer
 	outputPhrase string
 }
 
 // Count objective string on the single page
-func (c *counter) Count(url string, wg *sync.WaitGroup, objectiveString string, value *uint32) {
-	c.quotaChannel <- struct{}{}
-
-	defer func() {
-		wg.Done()
-		<-c.quotaChannel
-	}()
-
+func (c *counter) Count(url string, objectiveString string, totalValue *int64, outputChan chan string) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		c.logger.Println(c.errorMessage, err)
@@ -59,30 +48,24 @@ func (c *counter) Count(url string, wg *sync.WaitGroup, objectiveString string, 
 		return
 	}
 
-	countInBody := uint32(bytes.Count(body, []byte(objectiveString)))
+	countInBody := int64(bytes.Count(body, []byte(objectiveString)))
 
-	atomic.AddUint32(value, countInBody)
+	atomic.AddInt64(totalValue, countInBody)
 
-	_, err = fmt.Fprintf(c.output, c.outputPhrase, url, countInBody)
-	if err != nil {
-		c.logger.Println(c.errorMessage, err)
-		return
-	}
+	res := fmt.Sprintf(c.outputPhrase, url, countInBody)
+
+	outputChan <- res
 }
 
 // NewCounter creates new Counter interface
 func NewCounter(httpClient *http.Client,
-	quotaChannel chan struct{},
 	errorMessage string,
 	logger *log.Logger,
-	output io.Writer,
-	outputPhrase string) Counter {
+	outputPhrase string) *counter {
 	return &counter{
 		httpClient:   httpClient,
-		quotaChannel: quotaChannel,
 		errorMessage: errorMessage,
 		logger:       logger,
-		output:       output,
 		outputPhrase: outputPhrase,
 	}
 }

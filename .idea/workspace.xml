@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="830b8100-cfb1-4d22-889f-7a6beb4e54a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cmd/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/counter/counter.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/counter/counter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/urlhandler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/urlhandler/handler.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.15.3/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="KubernetesApiPersistence">
+    <option name="context" value="k8s.stage-suppliers-portal-custom-return" />
+    <option name="namespace" value="suppliers-portal-custom-return" />
+  </component>
+  <component name="ProjectId" id="1jq7APJkKPTgm6goeyG2QBWvClx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="ignore_missing_gitignore" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="440" y="240" key="#Go_Modules" timestamp="1604519661469">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="440" y="240" key="#Go_Modules/0.0.1280.800@0.0.1280.800" timestamp="1604519661469" />
+    <state x="322" y="133" width="635" height="534" key="find.popup" timestamp="1604528790624">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="322" y="133" width="635" height="534" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1604528790624" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1604528796305">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1604528796305" />
+  </component>
+</project>

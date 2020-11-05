@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
-	"sync"
 	"time"
 
 	counter2 "github.com/LuLStackCoder/test-assigment/pkg/counter"
@@ -15,7 +15,7 @@ import (
 
 const (
 	errorMessage = "msg: error from count"
-	outputPhrase = "Count for %s: %d\n"
+	outputPhrase = "Count for %s: %d"
 )
 
 func main() {
@@ -36,8 +36,14 @@ func main() {
 	}
 
 	logger := log.New(os.Stderr, "", log.Ldate|log.Ltime)
-	quotaChannel := make(chan struct{}, rateLim)
-	counter := counter2.NewCounter(httpClient, quotaChannel, errorMessage, logger, os.Stdout, outputPhrase)
-	urlHandler := urlhandler.NewURLHandler(counter, &sync.WaitGroup{})
-	fmt.Println("Total:", urlHandler.CountAllUrls(input, objectiveString))
+
+	counter := counter2.NewCounter(httpClient, errorMessage, logger, outputPhrase)
+	urlHandler := urlhandler.NewURLHandler(counter)
+
+	res, err := urlHandler.CountAllUrls(input, objectiveString)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Total:", res)
 }
