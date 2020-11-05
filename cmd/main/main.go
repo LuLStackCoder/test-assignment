@@ -38,7 +38,7 @@ func main() {
 	logger := log.New(os.Stderr, "", log.Ldate|log.Ltime)
 
 	counter := counter2.NewCounter(httpClient, errorMessage, logger, outputPhrase)
-	urlHandler := urlhandler.NewURLHandler(counter)
+	urlHandler := urlhandler.NewURLHandler(counter, rateLim)
 
 	res, err := urlHandler.CountAllUrls(input, objectiveString)
 	if err != nil {

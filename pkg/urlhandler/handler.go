@@ -18,6 +18,7 @@ type Counter interface {
 
 type urlHandler struct {
 	counter Counter
+	maxCap  int
 }
 
 // CountAllUrls count the objective string from all pages read from reader
@@ -26,9 +27,10 @@ func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (cou
 	wgPrinter := &sync.WaitGroup{}
 
 	scanner := bufio.NewScanner(reader)
-	workerChan := make(chan string, 5)
-	outputChan := make(chan string, 5)
 	worker := 0
+
+	workerChan := make(chan string, h.maxCap)
+	outputChan := make(chan string, h.maxCap)
 
 	wgPrinter.Add(1)
 
@@ -40,7 +42,7 @@ func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (cou
 	}(outputChan)
 
 	for scanner.Scan() {
-		if worker < 5 {
+		if worker < h.maxCap {
 			worker++
 			go func(workerChan chan string) {
 				for task := range workerChan {
@@ -53,6 +55,7 @@ func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (cou
 
 		workerChan <- scanner.Text()
 	}
+
 	close(workerChan)
 
 	err = scanner.Err()
@@ -70,8 +73,9 @@ func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (cou
 }
 
 // NewURLHandler creates new URLHandler interface
-func NewURLHandler(counter Counter) *urlHandler {
+func NewURLHandler(counter Counter, maxCap int) *urlHandler {
 	return &urlHandler{
+		maxCap:  maxCap,
 		counter: counter,
 	}
 }
