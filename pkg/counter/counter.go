@@ -9,12 +9,8 @@ import (
 	"sync/atomic"
 )
 
-// Counter interface represent the objective string counter on the single page
-type Counter interface {
-	Count(url string, objectiveString string, totalValue *int64, outputChannel chan string)
-}
-
-type counter struct {
+// Сounter implements Counter
+type Сounter struct {
 	httpClient   *http.Client
 	errorMessage string
 	logger       *log.Logger
@@ -22,7 +18,7 @@ type counter struct {
 }
 
 // Count objective string on the single page
-func (c *counter) Count(url string, objectiveString string, totalValue *int64, outputChan chan string) {
+func (c *Сounter) Count(url string, objectiveString string, totalValue *int64, outputChan chan string) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		c.logger.Println(c.errorMessage, err)
@@ -57,12 +53,12 @@ func (c *counter) Count(url string, objectiveString string, totalValue *int64, o
 	outputChan <- res
 }
 
-// NewCounter creates new Counter interface
+// NewCounter constructs and returns a usable Counter object
 func NewCounter(httpClient *http.Client,
 	errorMessage string,
 	logger *log.Logger,
-	outputPhrase string) *counter {
-	return &counter{
+	outputPhrase string) *Сounter {
+	return &Сounter{
 		httpClient:   httpClient,
 		errorMessage: errorMessage,
 		logger:       logger,

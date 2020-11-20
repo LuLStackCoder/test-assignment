@@ -7,22 +7,19 @@ import (
 	"sync"
 )
 
-// URLHandler interface represent the objective string counter from all pages read from reader
-type URLHandler interface {
-	CountAllUrls(reader io.Reader, objectiveString string) (count uint32, err error)
-}
-
+// Counter interface required for URLHandler
 type Counter interface {
 	Count(url string, objectiveString string, totalValue *int64, outputChannel chan string)
 }
 
-type urlHandler struct {
+// URLHandler implements URLHandler
+type URLHandler struct {
 	counter Counter
 	maxCap  int
 }
 
 // CountAllUrls count the objective string from all pages read from reader
-func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (count int64, err error) {
+func (h *URLHandler) CountAllUrls(reader io.Reader, objectiveString string) (count int64, err error) {
 	wgWorker := &sync.WaitGroup{}
 	wgPrinter := &sync.WaitGroup{}
 
@@ -73,8 +70,8 @@ func (h *urlHandler) CountAllUrls(reader io.Reader, objectiveString string) (cou
 }
 
 // NewURLHandler creates new URLHandler interface
-func NewURLHandler(counter Counter, maxCap int) *urlHandler {
-	return &urlHandler{
+func NewURLHandler(counter Counter, maxCap int) *URLHandler {
+	return &URLHandler{
 		maxCap:  maxCap,
 		counter: counter,
 	}
